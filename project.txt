@@ -1,0 +1,60 @@
+estrutura
+
+project_django_react
+    backend
+        /main
+        /venv
+        manage.py
+        db.sqlite3
+    frontend
+        /node_modules
+        /public/src
+
+criar django api backend
+- python3 -m venv venv
+- source venv/bin/activate
+
+- pip install django djangorestframework
+- django-admin startproject main .
+- python manage.py migrate
+- python manage.py runserver
+
+- deactivate
+
+criar react project
+- npx create-react-app frontend
+- npm start
+
+
+..................................................................................................
+
+backend-django
+
+arquivo: settings.py
+import os
+- TEMPLATES = [ 'DIRS':[os.path.join(BASE_DIR, '../../frontend/build')] ]
+
+criar arquivo: backend/main/views.py
+- from django.shortcuts import render
+    def index(request):
+        return render(request, 'index.html')
+
+arquivo: urls.py
+- from .views import index
+- urlpatterns = [ path('', index) ]
+
+
+
+frontend-react
+- npm run build
+
+
+
+backend-django
+arquivo: settings.py
+- STATICFILES_DIRS = [ os.path.join(BASE_DIR, '../../frontend/build/static') ]
+
+
+
+- source venv/bin/activate
+- python manage.py runserver
