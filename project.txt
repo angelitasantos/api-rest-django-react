@@ -1,3 +1,12 @@
+Aprendizado adquirido com a série de vídeos do canal Pedro Impulcetto
+- Vídeo 1 - [Criar uma API REST com Django](https://www.youtube.com/watch?v=wtl8ZyCbTbg)
+- Vídeo 2 - [Adicionar upload de imagens](https://www.youtube.com/watch?v=Syoz9ldmS6o)
+- Vídeo 3 - [Versionar códigos no Github](https://www.youtube.com/watch?v=FL8RtqJJwmQ)
+- Vídeo 4 - [Deploy no Heroku](https://www.youtube.com/watch?v=01iXLbvGcNE)
+- Vídeo 5 - [Utilizar Storage Cloud](https://www.youtube.com/watch?v=_Rsclg1FpPY)
+
+- DJANGO + REACT integration Tutorial: [Code Keen](https://www.youtube.com/watch?v=w8SQ8beafiQ&t=1s)
+
 estrutura
 
 project_django_react
@@ -45,7 +54,7 @@ arquivo: urls.py
 
 
 
-frontend-react
+frontend-react (para qualquer alteração inicial ou posterior)
 - npm run build
 
 
@@ -54,7 +63,69 @@ backend-django
 arquivo: settings.py
 - STATICFILES_DIRS = [ os.path.join(BASE_DIR, '../../frontend/build/static') ]
 
-
-
 - source venv/bin/activate
 - python manage.py runserver
+
+
+..................................................................................................
+
+nova api
+
+criar o app
+- django-admin startapp nome_app
+- python manage.py migrate
+- python manage.py runserver
+
+configurar o projeto no arquivo settings.py
+- adicionar INSTALLED_APPS = [ 'rest_framework', 'nome_app', ]
+
+criar o model do projeto no arquivo models.py
+- criar os campos da tabela do projeto
+- importar a biblioteca from uuid import uuid4 para o campo id
+
+criar uma função dentro de models.py para armazenar o nome do arquivo
+- def upload_image_movie(instance, filename):
+
+criar o arquivo serializers dentro da pasta nome_app/api
+- from rest_framework import serializers
+- from nome_app import models
+
+criar o arquivo viewsets dentro da pasta nome_app/api
+- from rest_framework import viewsets
+- from nome_app.api import serializers
+- from nome_app import models
+
+criar as rotas no arquivo urls
+- from rest_framework import routers
+- from nome_app.api import viewsets as nome_appviewsets
+- from django.conf.urls.static import static
+- from django.conf import settings
++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+instalar a biblioteca que trabalha com imagens
+- pip install Pillow
+
+identificar aonde será armazenado as imagens no arquivo settings.py
+- import os
+- criar variáveis de ambiente
+- MEDIA_URL = '/media/'
+- MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+incluir o model no admin.py
+- from .models import Nome_app
+
+criar o super usuário
+- python manage.py createsuperuser
+
+criar a tabela dentro do banco de dados
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py runserver
+
+
+..................................................................................................
+
+
+
+
+..................................................................................................
